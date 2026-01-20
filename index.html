@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindTree - Tree Making App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌳 MindTree</h1>
+            <p class="subtitle">Create Mind Maps, Family Trees & Organization Charts</p>
+        </header>
+
+        <div class="toolbar">
+            <div class="toolbar-section">
+                <label for="treeType">Template:</label>
+                <select id="treeType">
+                    <option value="mindmap">Mind Map</option>
+                    <option value="family">Family Tree</option>
+                    <option value="org">Organization Chart</option>
+                </select>
+                <button id="loadTemplate" class="btn btn-primary">Load Template</button>
+            </div>
+            
+            <div class="toolbar-section">
+                <button id="addRoot" class="btn btn-success">Add Root Node</button>
+                <button id="addChild" class="btn btn-success">Add Child Node</button>
+                <button id="deleteNode" class="btn btn-danger">Delete Node</button>
+            </div>
+
+            <div class="toolbar-section">
+                <button id="save" class="btn btn-primary">Save Tree</button>
+                <button id="load" class="btn btn-primary">Load Tree</button>
+                <button id="export" class="btn btn-primary">Export as JSON</button>
+                <button id="clear" class="btn btn-danger">Clear All</button>
+            </div>
+        </div>
+
+        <div id="canvasContainer">
+            <svg id="treeSvg" width="100%" height="600">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#666" />
+                    </marker>
+                </defs>
+            </svg>
+        </div>
+
+        <div id="editPanel" class="edit-panel hidden">
+            <h3>Edit Node</h3>
+            <label for="nodeText">Text:</label>
+            <input type="text" id="nodeText" placeholder="Enter node text">
+            <label for="nodeColor">Color:</label>
+            <input type="color" id="nodeColor" value="#4CAF50">
+            <div class="button-group">
+                <button id="saveEdit" class="btn btn-success">Save</button>
+                <button id="cancelEdit" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>Instructions</h3>
+            <ul>
+                <li><strong>Add Root Node:</strong> Click "Add Root Node" to create the main node</li>
+                <li><strong>Add Child:</strong> Select a node (click on it) then click "Add Child Node"</li>
+                <li><strong>Edit:</strong> Double-click on a node to edit its text and color</li>
+                <li><strong>Delete:</strong> Select a node and click "Delete Node"</li>
+                <li><strong>Move:</strong> Drag nodes to reposition them</li>
+                <li><strong>Save/Load:</strong> Save your tree to browser storage or export as JSON</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
