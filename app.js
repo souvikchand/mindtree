@@ -77,7 +77,7 @@ class MindTree {
         const parent = this.selectedNode;
         const childCount = parent.children.length;
         const spacing = 150;
-        const offset = (childCount - 0) * spacing - (childCount * spacing) / 2;
+        const offset = childCount * spacing - (childCount * spacing) / 2;
         
         const child = new TreeNode(
             this.nodeIdCounter++,
@@ -330,10 +330,10 @@ class MindTree {
             this.selectNode(node);
             this.isDragging = true;
             this.dragNode = node;
-            const pt = this.svg.createSVGPoint();
-            pt.x = e.clientX;
-            pt.y = e.clientY;
-            const svgPt = pt.matrixTransform(this.svg.getScreenCTM().inverse());
+            const ctm = this.svg.getScreenCTM();
+            if (!ctm) return;
+            const pt = new DOMPoint(e.clientX, e.clientY);
+            const svgPt = pt.matrixTransform(ctm.inverse());
             this.offset.x = svgPt.x - node.x;
             this.offset.y = svgPt.y - node.y;
         }
@@ -342,10 +342,10 @@ class MindTree {
     handleMouseMove(e) {
         if (!this.isDragging || !this.dragNode) return;
 
-        const pt = this.svg.createSVGPoint();
-        pt.x = e.clientX;
-        pt.y = e.clientY;
-        const svgPt = pt.matrixTransform(this.svg.getScreenCTM().inverse());
+        const ctm = this.svg.getScreenCTM();
+        if (!ctm) return;
+        const pt = new DOMPoint(e.clientX, e.clientY);
+        const svgPt = pt.matrixTransform(ctm.inverse());
         
         this.dragNode.x = svgPt.x - this.offset.x;
         this.dragNode.y = svgPt.y - this.offset.y;
