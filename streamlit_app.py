@@ -119,20 +119,12 @@ def render_tree():
     # Create figure
     fig, ax = plt.subplots(figsize=(12, 8))
     
-    # Try to use hierarchical layout if it's a tree
+    # Use spring layout for graph visualization
     try:
-        # Find root nodes (nodes with no incoming edges)
-        root_nodes = [node for node in st.session_state.graph.nodes() 
-                     if st.session_state.graph.in_degree(node) == 0]
-        
-        if root_nodes:
-            # Use hierarchical layout
-            pos = nx.spring_layout(st.session_state.graph, k=2, iterations=50)
-        else:
-            # Use spring layout for cyclic graphs
-            pos = nx.spring_layout(st.session_state.graph, k=2, iterations=50)
-    except:
         pos = nx.spring_layout(st.session_state.graph, k=2, iterations=50)
+    except (nx.NetworkXError, Exception) as e:
+        # Fallback to simple layout if spring layout fails
+        pos = nx.shell_layout(st.session_state.graph)
     
     # Draw the graph
     nx.draw(st.session_state.graph, pos, 
