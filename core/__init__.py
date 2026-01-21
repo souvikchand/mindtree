@@ -1,0 +1,1 @@
+# core functionality for MindTree application
