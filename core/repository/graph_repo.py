@@ -9,6 +9,30 @@ class GraphRepository:
     """
     In-memory graph repository.
     Acts as a lightweight graph database abstraction.
+    
+    Thread Safety:
+        This repository is NOT thread-safe. When used in a Streamlit application,
+        ensure each user session has its own isolated instance by storing it in
+        Streamlit's session_state.
+    
+    Usage with Streamlit:
+        ```python
+        import streamlit as st
+        from core.repository import GraphRepository
+        
+        # Initialize repository in session state (runs once per user session)
+        if "graph_repo" not in st.session_state:
+            st.session_state.graph_repo = GraphRepository()
+        
+        # Use the session-isolated repository
+        repo = st.session_state.graph_repo
+        repo.add_node(node)
+        ```
+    
+    This pattern ensures that:
+        - Each user session maintains its own independent graph data
+        - No race conditions occur between concurrent users
+        - State persists within a session but remains isolated across sessions
     """
 
     def __init__(self) -> None:
